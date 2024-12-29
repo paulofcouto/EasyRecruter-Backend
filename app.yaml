@@ -1,0 +1,17 @@
+runtime: custom
+env: flex
+service: easy-api
+
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+network:
+  instance_tag: http-server
+  
+env_variables:
+  GOOGLE_CLOUD_PROJECT: easy-recruter
+  GOOGLE_CLOUD_STORAGE_BUCKET: easy-recruter-staging

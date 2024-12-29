@@ -1,0 +1,19 @@
+# Ignorar pastas
+bin/
+obj/
+node_modules/
+
+# Ignorar arquivos específicos
+*.suo
+*.user
+*.csproj.user
+appsettings.Development.json
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar pastas de ferramentas de build
+.vs/
+
+# Ignorar arquivos temporários
+Thumbs.db

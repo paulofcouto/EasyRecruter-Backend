@@ -67,7 +67,9 @@ builder.Services.AddCors(options =>
         builder
             .SetIsOriginAllowed(origin =>
                 new Uri(origin).Host == "localhost" ||
-                origin == "chrome-extension://ineffafedhljcjhecomdkajcemhkplfk")
+                origin == "chrome-extension://ineffafedhljcjhecomdkajcemhkplfk" ||
+                origin == "https://easyrecruter.com.br" ||
+                origin == "https://www.easyrecruter.com.br")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
