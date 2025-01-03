@@ -6,6 +6,7 @@ using Easy.Core.Repository;
 using Easy.Infrastructure.Persistence;
 using Easy.Infrastructure.Persistence.Repository;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -67,7 +68,8 @@ builder.Services.AddCors(options =>
         builder
             .SetIsOriginAllowed(origin =>
                 new Uri(origin).Host == "localhost" ||
-                origin == "chrome-extension://ineffafedhljcjhecomdkajcemhkplfk" ||
+                origin == "chrome-extension://ineffafedhljcjhecomdkajcemhkplfk" || //extension local
+                origin == "chrome-extension://cincfbjngclenlaabmhoflckfmeacjcc" || //extension publicado
                 origin == "https://easyrecruter.com.br" ||
                 origin == "https://www.easyrecruter.com.br" ||
                 origin == "https://api.easyrecruiter.com.br")
@@ -79,6 +81,10 @@ builder.Services.AddCors(options =>
 
 //FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<CadastrarUsuarioCommandValidator>();
+builder.Services.AddFluentValidationAutoValidation(config =>
+{
+    config.DisableDataAnnotationsValidation = true;
+});
 
 // Configuração JWT
 var secret = builder.Configuration["JwtConfig:Secret"] ?? throw new ArgumentNullException("JwtConfig:Secret", "A chave JWT não foi configurada.");

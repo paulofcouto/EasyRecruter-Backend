@@ -21,8 +21,10 @@ namespace Easy.Application.Commands.CadastrarUsuario
             {
                 return Result.Fail("Esse e-mail já está cadastrado.");
             }
-            
-            var usuario = new Usuario(request.Email, request.Senha);
+
+            var senhaHash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
+
+            var usuario = new Usuario(request.Email, senhaHash);
                         
             try
             {

@@ -6,16 +6,16 @@ namespace Easy.API.Controllers
 {
     [Route("v1/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AutenticarController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AuthController(IMediator mediator)
+        public AutenticarController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginUsuarioQuery query)
         {
             var result = await _mediator.Send(query);
