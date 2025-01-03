@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Easy.API.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("v1/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
