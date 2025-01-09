@@ -132,13 +132,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication(); 
+app.UseCors("AllowLocalhostAndChromeExtension");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors("AllowLocalhostAndChromeExtension");
 
 app.Run();
 
