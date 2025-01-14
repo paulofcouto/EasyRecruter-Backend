@@ -31,6 +31,13 @@ namespace Easy.Application.Commands.SalvarDadosCandidato
                 return Result.Fail("Usuário não identificado no token.");
             }
 
+            var candidatosUsuario = await _candidatoRepository.ObterPorIdDoUsuarioAssincrono(idUsuario);
+
+            if(candidatosUsuario.Count() > 299)
+            {
+                return Result.Fail("Quantidade de candidatos cadastrados excede o limite de 300.");
+            }
+
             if (string.IsNullOrEmpty(request.UrlPublica))
             {
                 return Result.Fail("A URL do perfil não pode ser vazia.");

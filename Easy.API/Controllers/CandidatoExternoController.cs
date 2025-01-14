@@ -16,7 +16,6 @@ namespace Easy.API.Controllers
             _mediator = mediator;
         }
 
-        // POST: api/CandidatoExterno/SalvarDados
         [HttpPost("SalvarDados")]
         public async Task<IActionResult> SalvarDados([FromBody] SalvarDadosCandidatoCommand command)
         {
