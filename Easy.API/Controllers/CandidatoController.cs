@@ -23,7 +23,6 @@ namespace Easy.API.Controllers
             _mediator = mediator;
         }
 
-        //GET: api/candidatos
         [HttpGet("candidatos")]
         public async Task<ActionResult<List<CandidatoViewModel>>> Get()
         {

@@ -24,6 +24,11 @@ namespace Easy.Application.Commands.SalvarDadosCandidato
         {
             var authorizationHeader = _httpContextAccessor.HttpContext?.Request.Headers.Authorization.ToString();
 
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return Result.Fail("Token não identificado.");
+            }
+
             var idUsuario = _jwtService.ExtrairIdUsuario(authorizationHeader);
 
             if (string.IsNullOrEmpty(idUsuario))
@@ -33,9 +38,9 @@ namespace Easy.Application.Commands.SalvarDadosCandidato
 
             var candidatosUsuario = await _candidatoRepository.ObterPorIdDoUsuarioAssincrono(idUsuario);
 
-            if(candidatosUsuario.Count() > 299)
+            if(candidatosUsuario.Count() > 199)
             {
-                return Result.Fail("Quantidade de candidatos cadastrados excede o limite de 300.");
+                return Result.Fail("Quantidade de candidatos cadastrados excede o limite de 200.");
             }
 
             if (string.IsNullOrEmpty(request.UrlPublica))
@@ -66,7 +71,7 @@ namespace Easy.Application.Commands.SalvarDadosCandidato
                         .ToList();
 
                     return new Candidato.Experiencia(
-                        experiencia.Empresa!,
+                        experiencia.Empresa!.Split('·')[0].Trim(),
                         experiencia.Local!,
                         listaCargos
                     );

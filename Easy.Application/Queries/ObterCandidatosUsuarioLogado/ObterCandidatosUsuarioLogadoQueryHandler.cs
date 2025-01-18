@@ -42,7 +42,9 @@ namespace Easy.Application.Queries.ObterCandidatosUsuarioLogado
                 c.Sobre ?? string.Empty,
                 c.Foto != null && c.Foto.Length > 0
                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(c.Foto)}"
-                : string.Empty
+                : string.Empty,
+                c.Experiencias,
+                c.Formacoes
             )).ToList();
 
             return Result<List<CandidatoViewModel>>.Ok(candidatosViewModel);
