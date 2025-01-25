@@ -50,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 //Repository
 builder.Services.AddScoped<ICandidatoRepository, CandidatoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
 builder.Services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
