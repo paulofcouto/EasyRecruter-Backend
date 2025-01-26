@@ -34,7 +34,7 @@ namespace Easy.Core.Entities
 
         public class Experiencia
         {
-            public Experiencia(string? empresa,string? local, List<Cargo>? listaCargos)
+            public Experiencia(string? empresa, string? local, List<Cargo>? listaCargos)
             {
                 Cargos = listaCargos;
                 Empresa = empresa;

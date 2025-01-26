@@ -1,39 +1,59 @@
-﻿using Easy.Core.Entities;
-using Easy.Core.Enum;
-using Easy.Core.Utils;
+﻿using Easy.Application.Interfaces;
+using Easy.Core.Entities;
+using Easy.Core.Enums;
 using Easy.Core.Repository;
 using Easy.Core.Result;
+using Easy.Core.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Easy.Application.Commands.CadastrarEmpresa
 {
     public class CadastrarEmpresaCommandHandler : IRequestHandler<CadastrarEmpresaCommand, Result>
     {
         private readonly IEmpresaRepository _empresaRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IJwtService _jwtService;
 
-        public CadastrarEmpresaCommandHandler(IEmpresaRepository empresaRepository)
+        public CadastrarEmpresaCommandHandler(IEmpresaRepository empresaRepository, IHttpContextAccessor httpContextAccessor, IJwtService jwtService)
         {
             _empresaRepository = empresaRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _jwtService = jwtService;
         }
 
         public async Task<Result> Handle(CadastrarEmpresaCommand request, CancellationToken cancellationToken)
         {
+            var authorizationHeader = _httpContextAccessor.HttpContext?.Request.Headers.Authorization.ToString();
+
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return Result.Fail("Token não identificado.");
+            }
+
+            var idUsuario = _jwtService.ExtrairIdUsuario(authorizationHeader);
+
+            if (string.IsNullOrEmpty(idUsuario))
+            {
+                return Result.Fail("Usuário não identificado no token.");
+            }
+
             if (await _empresaRepository.CnpjJaCadastradoAsync(request.Cnpj))
             {
                 return Result.Fail("CNPJ já cadastrado.");
             }
 
-            var estadoEnum = (request.Enredeco?.Estado ?? string.Empty).ParseEnumByDescription<Estado>();
+            var estadoEnum = (request.Endereco?.Estado ?? string.Empty).ParseEnumByDescription<Estado>();
 
             var endereco = new Endereco(
-                request.Enredeco?.Rua ?? string.Empty,
-                request.Enredeco?.Numero ?? string.Empty,
-                request.Enredeco?.Bairro ?? string.Empty,
-                request.Enredeco?.Cidade ?? string.Empty,
+                request.Endereco?.Rua ?? string.Empty,
+                request.Endereco?.Numero ?? string.Empty,
+                request.Endereco?.Bairro ?? string.Empty,
+                request.Endereco?.Cidade ?? string.Empty,
                 estadoEnum,
-                request.Enredeco?.CEP ?? string.Empty,
-                request.Enredeco?.Pais ?? string.Empty,
-                request.Enredeco?.Complemento ?? string.Empty
+                request.Endereco?.CEP ?? string.Empty,
+                request.Endereco?.Pais ?? string.Empty,
+                request.Endereco?.Complemento ?? string.Empty
             );
 
             var contato = new Contato(
@@ -42,6 +62,7 @@ namespace Easy.Application.Commands.CadastrarEmpresa
             );
 
             var empresa = new Empresa(
+                idUsuario,
                 request.NomeFantasia,
                 request.RazaoSocial ?? string.Empty,
                 request.Cnpj,

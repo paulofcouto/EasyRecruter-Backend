@@ -1,4 +1,4 @@
-﻿using Easy.Core.Enum;
+﻿using Easy.Core.Enums;
 
 namespace Easy.Core.Entities
 {

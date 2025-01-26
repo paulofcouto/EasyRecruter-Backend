@@ -5,11 +5,11 @@ namespace Easy.Core.Utils
 {
     public static class EnumExtensions
     {
-        public static T ParseEnumByDescription<T>(this string description) where T : System.Enum
+        public static T ParseEnumByDescription<T>(this string description) where T : Enum
         {
             if (string.IsNullOrWhiteSpace(description))
             {
-                return (T)System.Enum.ToObject(typeof(T), 0);
+                return (T)Enum.ToObject(typeof(T), 0);
             }
 
             var type = typeof(T);
@@ -23,6 +23,13 @@ namespace Easy.Core.Utils
             }
 
             throw new ArgumentException($"'{description}' is not a valid description for {type.Name}");
+        }
+
+        public static string GetEnumDescription(this Enum value)
+        {
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var descriptionAttribute = fieldInfo?.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute;
+            return descriptionAttribute?.Description ?? value.ToString();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Easy.Core.Enum
+﻿namespace Easy.Core.Enums
 {
     public enum TipoUsuario
     {

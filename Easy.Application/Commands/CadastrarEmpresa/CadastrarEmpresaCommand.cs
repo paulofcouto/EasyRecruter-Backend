@@ -1,5 +1,5 @@
 ﻿using Easy.Core.Entities;
-using Easy.Core.Enum;
+using Easy.Core.Enums;
 using Easy.Core.Result;
 using MediatR;
 
@@ -11,7 +11,7 @@ namespace Easy.Application.Commands.CadastrarEmpresa
         public string? RazaoSocial { get; set; }
         public required string Cnpj { get; set; }
         public string? Site { get; set; }
-        public EnderecoCommand? Enredeco { get; set; }
+        public EnderecoCommand? Endereco { get; set; }
         public ContatoCommand? Contato { get; set; }
     }
 
