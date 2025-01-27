@@ -18,11 +18,18 @@ namespace Easy.Infrastructure.Persistence.Repository
             await _empresas.InsertOneAsync(empresa);
         }
 
-        public async Task<bool> CnpjJaCadastradoAsync(string cnpj)
+        public async Task<bool> CnpjJaCadastradoAssincrono(string cnpj)
         {
             var empresaExistente = await _empresas.Find(u => u.Cnpj == cnpj).FirstOrDefaultAsync();
 
             return empresaExistente != null;
+        }
+
+        public async Task<Empresa> ObterPorUsuarioAssincrono(string id)
+        {
+            var empresa = await _empresas.FindAsync(u => u.IdUsuario == id);
+
+            return empresa.FirstOrDefault();
         }
     }
 }

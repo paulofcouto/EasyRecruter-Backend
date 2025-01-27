@@ -22,5 +22,10 @@
         {
             return new Result<T>(false, default(T), error);
         }
+
+        public static Result<T> Empty()
+        {
+            return new Result<T>(true, default(T), string.Empty);
+        }
     }
 }

@@ -4,7 +4,8 @@ namespace Easy.Core.Repository
 {
     public interface IEmpresaRepository
     {
-        Task<bool> CnpjJaCadastradoAsync(string cnpj);
+        Task<bool> CnpjJaCadastradoAssincrono(string cnpj);
         Task CadastrarAssincrono(Empresa empresa);
+        Task<Empresa> ObterPorUsuarioAssincrono(string id);
     }
 }

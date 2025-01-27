@@ -1,4 +1,7 @@
 ﻿using Easy.Application.Commands.CadastrarEmpresa;
+using Easy.Application.Queries.ObterEmpresaDetalhadoPorUsuario;
+using Easy.Application.Queries.ObterEmpresaPorUsuario;
+using Easy.Application.ViewModel;
 using Easy.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,20 +21,35 @@ namespace Easy.API.Controllers
             _mediator = mediator;
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<EmpresaDetalhadoViewModel>> Get([FromRoute] string id)
-        //{
-        //    var query = new ObterEmpresaPorIdQuery(id);
-        //
-        //    var result = await _mediator.Send(query);
-        //
-        //    if (!result.IsSuccess)
-        //    {
-        //        return NotFound(result.Error);
-        //    }
-        //
-        //    return Ok(result.Value);
-        //}
+        [HttpGet("EmpresaResumo")]
+        public async Task<ActionResult<EmpresaResumoViewModel>> ObterEmpresaResumo()
+        {
+            var query = new ObterEmpresaPorUsuarioQuery();
+        
+            var result = await _mediator.Send(query);
+        
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Error);
+            }
+        
+            return Ok(result.Value);
+        }
+
+        [HttpGet("EmpresaDetalhado")]
+        public async Task<ActionResult<EmpresaDetalhadoViewModel>> ObterEmpresaDetalhado()
+        {
+            var query = new ObterEmpresaDetalhadoPorUsuarioQuery();
+
+            var result = await _mediator.Send(query);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
 
         [HttpPost]
         public async Task<ActionResult<Empresa>> Post([FromBody] CadastrarEmpresaCommand command)

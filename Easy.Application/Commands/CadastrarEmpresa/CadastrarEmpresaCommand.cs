@@ -1,6 +1,4 @@
-﻿using Easy.Core.Entities;
-using Easy.Core.Enums;
-using Easy.Core.Result;
+﻿using Easy.Core.Result;
 using MediatR;
 
 namespace Easy.Application.Commands.CadastrarEmpresa

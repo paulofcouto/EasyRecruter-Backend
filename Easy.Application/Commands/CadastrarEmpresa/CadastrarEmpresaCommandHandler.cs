@@ -38,7 +38,7 @@ namespace Easy.Application.Commands.CadastrarEmpresa
                 return Result.Fail("Usuário não identificado no token.");
             }
 
-            if (await _empresaRepository.CnpjJaCadastradoAsync(request.Cnpj))
+            if (await _empresaRepository.CnpjJaCadastradoAssincrono(request.Cnpj))
             {
                 return Result.Fail("CNPJ já cadastrado.");
             }

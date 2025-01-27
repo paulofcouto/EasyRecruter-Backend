@@ -2,10 +2,10 @@
 {
     public class Contato
     {
-        public List<Email>? Emails { get; private set; }
-        public List<Telefone>? Telefones { get; private set; }
+        public List<Email> Emails { get; private set; }
+        public List<Telefone> Telefones { get; private set; }
 
-        public Contato(List<Email>? emails, List<Telefone>? telefone)
+        public Contato(List<Email> emails, List<Telefone> telefone)
         {
             Emails = emails;
             Telefones = telefone;
