@@ -38,7 +38,7 @@ namespace Easy.Application.Commands.CadastrarEmpresa
                 return Result.Fail("Usuário não identificado no token.");
             }
 
-            if (await _empresaRepository.CnpjJaCadastradoAssincrono(request.Cnpj))
+            if (await _empresaRepository.CnpjJaCadastradoAssincrono(request.Cnpj, idUsuario))
             {
                 return Result.Fail("CNPJ já cadastrado.");
             }
@@ -71,7 +71,18 @@ namespace Easy.Application.Commands.CadastrarEmpresa
                 contato
             );
 
-            await _empresaRepository.CadastrarAssincrono(empresa);
+            var empresaExistente = await _empresaRepository.ObterPorUsuarioAssincrono(empresa.IdUsuario);
+
+            if (empresaExistente == null)
+            {
+                await _empresaRepository.InserirAssincrono(empresa);
+            }
+            else
+            {
+                empresa.GetType().GetProperty("_id")?.SetValue(empresa, empresaExistente.Id);
+
+                await _empresaRepository.AtualizarAssincrono(empresa);
+            }
 
             return Result.Ok();
         }
