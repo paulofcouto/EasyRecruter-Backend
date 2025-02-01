@@ -57,7 +57,7 @@ namespace Easy.Application.Queries.ObterEmpresaPorUsuario
         {
             if (!string.IsNullOrEmpty(endereco.Cidade) && endereco.Estado != Core.Enums.Estado.None)
             {
-                return $"{endereco.Cidade}/{endereco.Estado.GetEnumDescription()}";
+                return $"{endereco.Cidade} / {endereco.Estado.GetEnumDescription()}";
             }
                 
             if (!string.IsNullOrEmpty(endereco.Cidade))

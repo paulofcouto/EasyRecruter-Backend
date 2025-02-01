@@ -1,5 +1,6 @@
 ﻿using Easy.Core.Result;
 using MediatR;
+using System.Text.RegularExpressions;
 
 namespace Easy.Application.Commands.CadastrarEmpresa
 {
@@ -7,7 +8,13 @@ namespace Easy.Application.Commands.CadastrarEmpresa
     {
         public required string NomeFantasia { get; set; }
         public string? RazaoSocial { get; set; }
-        public required string Cnpj { get; set; }
+
+        private string _cnpj = string.Empty;
+        public required string Cnpj
+        {
+            get => _cnpj;
+            set => _cnpj = Regex.Replace(value, @"\D", "");
+        }
         public string? Site { get; set; }
         public EnderecoCommand? Endereco { get; set; }
         public ContatoCommand? Contato { get; set; }
